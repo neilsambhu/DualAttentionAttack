@@ -215,7 +215,11 @@ def cal_texture(CONTENT=False):
          
 def run_cam(data_dir, epoch, train=True, batch_size=BATCH_SIZE):
     print(data_dir)
+    if bVerbose:
+        frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
     dataset = MyDataset(data_dir, 224, texture_size, faces, vertices, distence=None, mask_dir=mask_dir, ret_mask=True)
+    if bVerbose:
+        frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
     loader = DataLoader(
         dataset=dataset,     
         batch_size=batch_size,  
@@ -227,7 +231,11 @@ def run_cam(data_dir, epoch, train=True, batch_size=BATCH_SIZE):
     
     Cam = CAM()
     
+    if bVerbose:
+        frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
     textures = cal_texture()
+    if bVerbose:
+        frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 
     dataset.set_textures(textures)
     print(len(dataset))
@@ -323,6 +331,8 @@ if __name__ == '__main__':
     
     run_cam(train_dir, EPOCH)
     
+    if bVerbose:
+        frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
     np.save(os.path.join(log_dir, 'texture.npy'), texture_param.data.cpu().numpy())
     
 

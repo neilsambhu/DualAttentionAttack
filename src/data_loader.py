@@ -12,6 +12,8 @@ sys.path.append("../renderer/")
 import nmr_test as nmr
 import neural_renderer
 
+from inspect import currentframe, getframeinfo
+bVerbose = True
 
 class MyDataset(Dataset):
     def __init__(self, data_dir, img_size, texture_size, faces, vertices, distence=None, mask_dir='', ret_mask=False):
@@ -41,8 +43,17 @@ class MyDataset(Dataset):
         self.img_size = img_size
         textures = np.ones((1, faces.shape[0], texture_size, texture_size, texture_size, 3), 'float32')
         self.textures = torch.from_numpy(textures).cuda(device=0)
-        self.faces_var = torch.from_numpy(faces[None, :, :]).cuda(device=0)
-        self.vertices_var = torch.from_numpy(vertices[None, :, :]).cuda(device=0)
+        if bVerbose:
+            frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+            print(f'type(faces): {type(faces)}')
+        # self.faces_var = torch.from_numpy(faces[None, :, :]).cuda(device=0)
+        self.faces_var = torch.from_numpy(np.asarray(faces[None, :, :].cpu())).cuda(device=0)
+        if bVerbose:
+            frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+        # self.vertices_var = torch.from_numpy(vertices[None, :, :]).cuda(device=0)
+        self.vertices_var = torch.from_numpy(np.asarray(vertices[None, :, :].cpu())).cuda(device=0)
+        if bVerbose:
+            frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
         self.mask_renderer = nmr.NeuralRenderer(img_size=self.img_size).cuda()
         self.mask_dir = mask_dir
         self.ret_mask = ret_mask
