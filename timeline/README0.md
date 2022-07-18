@@ -49,4 +49,5 @@ Your installed version is: 2.27
 
 ```
 Downgrade from Python 3.9 to Python 3.7.  
-7/18/2022 2:30 PM: get training working
+7/18/2022 2:30 PM: get training working.  
+7/18/2022 2:47 PM: "import cv2":opencv won't install. Restart environment.  
