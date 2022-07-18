@@ -23,6 +23,9 @@ import random
 from functools import reduce
 import argparse
 
+from inspect import currentframe, getframeinfo
+bVerbose = True
+
 torch.manual_seed(2333)
 torch.cuda.manual_seed(2333)
 np.random.seed(2333)
@@ -49,8 +52,12 @@ args = parser.parse_args()
 
 obj_file =args.obj
 texture_size = 6
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+    print(f'obj_file: {obj_file}, texture_size: {texture_size}')
 vertices, faces, textures = neural_renderer.load_obj(filename_obj=obj_file, texture_size=texture_size, load_texture=True)
-
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 
 mask_dir = os.path.join(args.datapath, 'masks/')
 

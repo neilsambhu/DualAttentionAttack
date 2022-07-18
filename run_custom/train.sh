@@ -5,4 +5,5 @@
 python src/train.py \
 	--datapath="src/data" \
 	--content="src/contents/smile.jpg" \
-	--canny="src/contents/smile_edge.jpg"
+	--canny="src/contents/smile_edge.jpg" \
+	--obj="src/audi_et_te.obj"
