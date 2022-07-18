@@ -88,9 +88,30 @@ BATCH_SIZE = args.batchsize
 EPOCH = args.epoch
 
 
-texture_content = torch.from_numpy(np.load(args.content)).cuda(device=0)
-texture_canny = torch.from_numpy(np.load(args.canny)).cuda(device=0)
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+    print(f'args.content: {args.content}')
+    from os.path import exists
+    if exists(args.content):
+        print(f'args.content: {args.content} exists')
+    else:
+        print(f'args.content: {args.content} does not exist')
+# texture_content = torch.from_numpy(np.load(args.content)).cuda(device=0)
+texture_content = torch.from_numpy(np.asarray(Image.open(args.content))).cuda(device=0)
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+    print(f'args.canny: {args.canny}')
+    if exists(args.canny):
+        print(f'args.canny: {args.canny} exists')
+    else:
+        print(f'args.canny: {args.canny} does not exist')
+# texture_canny = torch.from_numpy(np.load(args.canny)).cuda(device=0)
+texture_canny = torch.from_numpy(np.asarray(Image.open(args.canny))).cuda(device=0)
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 texture_canny = (texture_canny >= 1).int()
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 def loss_content_diff(tex):
     return  D1 * torch.sum(texture_canny * torch.pow(tex - texture_content, 2)) + D2 * torch.sum((1 - texture_canny) * torch.pow(tex - texture_content, 2)) 
 
@@ -107,6 +128,9 @@ def loss_smooth(img, mask):
 cam_edge = 7
 
 vis = np.zeros((cam_edge, cam_edge))
+
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 
 def dfs(x1, x, y, points):
     points.append(x1[x][y])
@@ -149,18 +173,30 @@ def loss_midu(x1):
 
 # Textures
 
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 texture_param = np.ones((1, faces.shape[0], texture_size, texture_size, texture_size, 3), 'float32') * -0.9# test 0
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 texture_param = torch.autograd.Variable(torch.from_numpy(texture_param).cuda(device=0), requires_grad=True)
 
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 texture_origin = torch.from_numpy(textures[None, :, :, :, :, :]).cuda(device=0)
 
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 texture_mask = np.zeros((faces.shape[0], texture_size, texture_size, texture_size, 3), 'int8')
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 with open(args.faces, 'r') as f:
     face_ids = f.readlines()
     # print(face_ids)
     for face_id in face_ids:
         if face_id != '\n':
             texture_mask[int(face_id) - 1, :, :, :, :] = 1
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 texture_mask = torch.from_numpy(texture_mask).cuda(device=0).unsqueeze(0)
 
 
