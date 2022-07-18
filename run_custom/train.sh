@@ -1,0 +1,1 @@
+# python train.py --datapath=[path to dataset] --content=[path to seed content] --canny=[path to edge mask]
