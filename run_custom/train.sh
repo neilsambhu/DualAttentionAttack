@@ -1,1 +1,8 @@
-# python train.py --datapath=[path to dataset] --content=[path to seed content] --canny=[path to edge mask]
+python src/train.py \
+	--datapath="" \
+	--content="" \
+	--canny=""
+# python train.py \
+# 	--datapath="src/data" \
+# 	--content=[path to seed content] \
+# 	--canny=[path to edge mask]
