@@ -58,3 +58,4 @@ conda create -n dualattentionattack python=3.7
 7/18/2022 5:14 PM: need to find what's wrong with train.py:"texture_origin"  
 7/18/2022 5:50 PM: train.py:run_cam:dataset  
 7/18/2022 6:16 PM: train.py:run_cam:cal_texture  
+7/18/2022 6:25 PM: need to learn torch.nn.Tanh()  

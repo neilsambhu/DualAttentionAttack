@@ -208,7 +208,12 @@ def cal_texture(CONTENT=False):
     if CONTENT:
         textures = 0.5 * (torch.nn.Tanh()(texture_content) + 1) 
     else:
+        if bVerbose:
+            frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+            print(f'texture_param: {texture_param}')
         textures = 0.5 * (torch.nn.Tanh()(texture_param) + 1)
+        if bVerbose:
+            frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
     # return textures
     return texture_origin * (1 - texture_mask) + texture_mask * textures
    
