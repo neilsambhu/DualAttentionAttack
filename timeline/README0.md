@@ -55,4 +55,5 @@ Downgrade from Python 3.9 to Python 3.7.
 conda create -n dualattentionattack python=3.7
 ```
 7/18/2022 3:24 PM: restart environment.  
-7/18/2022 5:14 PM: need to find what's wrong with train.py:"texture_origin"
+7/18/2022 5:14 PM: need to find what's wrong with train.py:"texture_origin"  
+7/18/2022 5:50 PM: train.py:run_cam:dataset

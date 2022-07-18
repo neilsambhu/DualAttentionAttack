@@ -182,13 +182,17 @@ texture_param = torch.autograd.Variable(torch.from_numpy(texture_param).cuda(dev
 
 if bVerbose:
     frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
-texture_origin = torch.from_numpy(textures[None, :, :, :, :, :]).cuda(device=0)
+    print(f'type(textures): {type(textures)}')
+    # print(f'textures: {textures}')
+# texture_origin = torch.from_numpy(textures[None, :, :, :, :, :]).cuda(device=0)
+texture_origin = torch.from_numpy(np.asarray(textures[None, :, :, :, :, :].cpu())).cuda(device=0)
 
 if bVerbose:
     frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
 texture_mask = np.zeros((faces.shape[0], texture_size, texture_size, texture_size, 3), 'int8')
 if bVerbose:
     frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+    print(f'args.faces: {args.faces}')
 with open(args.faces, 'r') as f:
     face_ids = f.readlines()
     # print(face_ids)
@@ -302,7 +306,20 @@ if __name__ == '__main__':
     train_dir = os.path.join(args.datapath, 'phy_attack/train/')
     test_dir = os.path.join(args.datapath, 'phy_attack/test/')
 
-    texture_param = torch.autograd.Variable(torch.from_numpy(np.load(args.content)).cuda(device=0), requires_grad=True)
+    if bVerbose:
+        frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+    # texture_param = torch.autograd.Variable(torch.from_numpy(np.load(args.content)).cuda(device=0), requires_grad=True)
+    # texture_param = torch.autograd.Variable(
+    #     torch.from_numpy(
+    #         np.asarray(
+    #             Image.open(args.content))).cuda(device=0), requires_grad=True)
+    # img = Image.open(args.content)
+    # img_np = np.asarray(img)
+    # img_np_torch = torch.from_numpy(img_np)
+    # texture_param = torch.autograd.Variable(img_np_torch, requires_grad=True)
+    texture_param = torch.autograd.Variable(torch.from_numpy(np.asarray(Image.open(args.content))).cuda(device=0))
+    if bVerbose:
+        frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
     
     run_cam(train_dir, EPOCH)
     
