@@ -178,7 +178,13 @@ if bVerbose:
 texture_param = np.ones((1, faces.shape[0], texture_size, texture_size, texture_size, 3), 'float32') * -0.9# test 0
 if bVerbose:
     frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+    print(f'type(texture_param): {type(texture_param)}')
 texture_param = torch.autograd.Variable(torch.from_numpy(texture_param).cuda(device=0), requires_grad=True)
+if bVerbose:
+    frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+    print(f'type(texture_param): {type(texture_param)}')
+    print(f'texture_param.type(): {texture_param.type()}')
+    # textures = 0.5 * (torch.nn.Tanh()(texture_param) + 1)
 
 if bVerbose:
     frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
@@ -210,7 +216,9 @@ def cal_texture(CONTENT=False):
     else:
         if bVerbose:
             frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
-            print(f'texture_param: {texture_param}')
+            print(f'type(texture_param): {type(texture_param)}')
+            print(f'texture_param.type(): {texture_param.type()}')
+        # textures = 0.5 * (torch.nn.Tanh()(texture_param) + 1)
         textures = 0.5 * (torch.nn.Tanh()(texture_param) + 1)
         if bVerbose:
             frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
@@ -333,6 +341,9 @@ if __name__ == '__main__':
     texture_param = torch.autograd.Variable(torch.from_numpy(np.asarray(Image.open(args.content))).cuda(device=0))
     if bVerbose:
         frameinfo = getframeinfo(currentframe());print(f"Neil {frameinfo.filename}:{frameinfo.lineno}")
+        print(f'type(texture_param): {type(texture_param)}')
+        print(f'texture_param.type(): {texture_param.type()}')
+
     
     run_cam(train_dir, EPOCH)
     
