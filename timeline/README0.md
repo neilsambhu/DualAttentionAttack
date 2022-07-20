@@ -61,3 +61,6 @@ conda create -n dualattentionattack python=3.7
 7/18/2022 6:25 PM: need to learn torch.nn.Tanh()  
 7/19/2022 1:25 PM: train.py:run_cam:cal_texture:stop texture_param.type() conversion 
 from torch.cuda.FloatTensor to torch.cuda.ByteTensor  
+7/20/2022 1:01 PM:  
+torch.nn.Tanh() solved.  
+train.py:run_cam:cal_texture  
