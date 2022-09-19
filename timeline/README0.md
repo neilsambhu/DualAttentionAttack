@@ -64,3 +64,10 @@ from torch.cuda.FloatTensor to torch.cuda.ByteTensor
 7/20/2022 1:01 PM:  
 torch.nn.Tanh() solved.  
 train.py:run_cam:cal_texture  
+# SSD Red Hat Enterprise Linux 8
+9/19/2022 6:49:15 PM: setup conda environment
+```
+conda create -n dualattentionattack python=3.7
+conda activate dualattentionattack
+bash run_custom_setup/install_requirements.sh
+```
