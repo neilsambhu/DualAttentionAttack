@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Requirements:
 # 	pytorch: 1.4.0
 # 	neural_render: 1.1.3
