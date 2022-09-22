@@ -235,6 +235,10 @@ def cal_texture(CONTENT=False):
         # print(f'type(textures): {type(textures)}')
         print(f'textures.size(): {textures.size()}')
 
+        print(f'(texture_origin @ (1 - texture_mask)).size(): {(texture_origin @ (1 - texture_mask)).size()}')
+        print(f'(texture_mask @ textures).size(): {(texture_mask @ textures).size()}')
+        print(f'(texture_origin * (1 - texture_mask)).size(): {(texture_origin * (1 - texture_mask)).size()}')
+        print(f'(texture_mask * textures).size(): {(texture_mask * textures).size()}')
         
     return texture_origin * (1 - texture_mask) + texture_mask * textures
    
