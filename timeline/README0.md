@@ -71,7 +71,7 @@ conda create -n dualattentionattack python=3.7
 conda activate dualattentionattack
 bash run_custom_setup/install_requirements.sh
 ```
-10/8/2022 10:58:28 PM: 
+10/8/2022 10:58:28 PM: get dimensions for assessing broadcasting
 ```
 (dualattentionattack) [nsambhu@localhost DualAttentionAttack]$ ./run_custom/train.sh
 Neil src/train.py:56
