@@ -71,3 +71,68 @@ conda create -n dualattentionattack python=3.7
 conda activate dualattentionattack
 bash run_custom_setup/install_requirements.sh
 ```
+10/8/2022 10:58:28 PM: 
+```
+(dualattentionattack) [nsambhu@localhost DualAttentionAttack]$ ./run_custom/train.sh
+Neil src/train.py:56
+obj_file: src/audi_et_te.obj, texture_size: 6
+Neil src/train.py:60
+Neil src/train.py:92
+args.content: src/contents/smile.jpg
+args.content: src/contents/smile.jpg exists
+Neil src/train.py:102
+args.canny: src/contents/smile_edge.jpg
+args.canny: src/contents/smile_edge.jpg exists
+Neil src/train.py:111
+Neil src/train.py:114
+Neil src/train.py:133
+Neil src/train.py:177
+Neil src/train.py:180
+type(texture_param): <class 'numpy.ndarray'>
+Neil src/train.py:184
+type(texture_param): <class 'torch.Tensor'>
+texture_param.type(): torch.cuda.FloatTensor
+Neil src/train.py:190
+type(textures): <class 'torch.Tensor'>
+Neil src/train.py:197
+Neil src/train.py:200
+args.faces: src/all_faces.txt
+Neil src/train.py:209
+logs/epoch-1+batch_size-1+lr-0.01+model-resnet50+loss_func-loss_midu+loss_content+loss_smooth+lamb-0.0001+D1-0.9+D2-0.1+T-0.0001+
+Neil src/train.py:352
+Neil src/train.py:381
+type(texture_param): <class 'torch.Tensor'>
+texture_param.type(): torch.cuda.FloatTensor
+src/data/phy_attack/train/
+Neil src/train.py:253
+12500
+Neil /home/nsambhu/github/DualAttentionAttack/src/data_loader.py:47
+type(faces): <class 'torch.Tensor'>
+Neil /home/nsambhu/github/DualAttentionAttack/src/data_loader.py:52
+Neil /home/nsambhu/github/DualAttentionAttack/src/data_loader.py:56
+Neil src/train.py:256
+Neil src/train.py:269
+Neil src/train.py:218
+type(texture_param): <class 'torch.Tensor'>
+texture_param.type(): torch.cuda.FloatTensor
+Neil src/train.py:224
+Neil src/train.py:227
+type(texture_origin): <class 'torch.Tensor'>
+texture_origin.size(): torch.Size([1, 23145, 6, 6, 6, 3])
+type(texture_mask): <class 'torch.Tensor'>
+texture_mask.size(): torch.Size([1, 23145, 6, 6, 6, 3])
+type(textures): <class 'torch.Tensor'>
+textures.size(): torch.Size([647, 646, 3])
+type(1 - texture_mask): <class 'torch.Tensor'>
+(1 - texture_mask).size(): torch.Size([1, 23145, 6, 6, 6, 3])
+Traceback (most recent call last):
+  File "src/train.py", line 386, in <module>
+    run_cam(train_dir, EPOCH)
+  File "src/train.py", line 270, in run_cam
+    textures = cal_texture()
+  File "src/train.py", line 243, in cal_texture
+    print(f'np.matmul(texture_mask.cpu(), textures.cpu()).size(): {np.matmul(texture_mask.cpu(), textures.cpu()).size()}')
+  File "/home/nsambhu/.conda/envs/dualattentionattack/lib/python3.7/site-packages/torch/tensor.py", line 486, in __array__
+    return self.numpy()
+RuntimeError: Can't call numpy() on Variable that requires grad. Use var.detach().numpy() instead.
+```
