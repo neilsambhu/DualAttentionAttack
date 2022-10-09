@@ -117,22 +117,17 @@ type(texture_param): <class 'torch.Tensor'>
 texture_param.type(): torch.cuda.FloatTensor
 Neil src/train.py:224
 Neil src/train.py:227
-type(texture_origin): <class 'torch.Tensor'>
 texture_origin.size(): torch.Size([1, 23145, 6, 6, 6, 3])
-type(texture_mask): <class 'torch.Tensor'>
 texture_mask.size(): torch.Size([1, 23145, 6, 6, 6, 3])
-type(textures): <class 'torch.Tensor'>
 textures.size(): torch.Size([647, 646, 3])
-type(1 - texture_mask): <class 'torch.Tensor'>
 (1 - texture_mask).size(): torch.Size([1, 23145, 6, 6, 6, 3])
+(texture_origin * (1 - texture_mask)).size(): torch.Size([1, 23145, 6, 6, 6, 3])
 Traceback (most recent call last):
   File "src/train.py", line 386, in <module>
     run_cam(train_dir, EPOCH)
   File "src/train.py", line 270, in run_cam
     textures = cal_texture()
-  File "src/train.py", line 243, in cal_texture
-    print(f'np.matmul(texture_mask.cpu(), textures.cpu()).size(): {np.matmul(texture_mask.cpu(), textures.cpu()).size()}')
-  File "/home/nsambhu/.conda/envs/dualattentionattack/lib/python3.7/site-packages/torch/tensor.py", line 486, in __array__
-    return self.numpy()
-RuntimeError: Can't call numpy() on Variable that requires grad. Use var.detach().numpy() instead.
+  File "src/train.py", line 245, in cal_texture
+    print(f'(texture_mask * textures).size(): {(texture_mask * textures).size()}')
+RuntimeError: The size of tensor a (6) must match the size of tensor b (646) at non-singleton dimension 4
 ```
