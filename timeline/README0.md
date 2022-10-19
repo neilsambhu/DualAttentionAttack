@@ -158,4 +158,4 @@ Traceback (most recent call last):
     raise ValueError("Cannot load file containing pickled data "
 ValueError: Cannot load file containing pickled data when allow_pickle=False
 ```
-10/19/2022 12:48:03 PM: change position of parameter: https://github.com/neilsambhu/DualAttentionAttack/blob/9a5ba1d3cd56a390abd7ec2af5ef08439d5cc962/src/train.py#84
+10/19/2022 12:48:03 PM: change position of parameter: https://github.com/neilsambhu/DualAttentionAttack/blob/9a5ba1d3cd56a390abd7ec2af5ef08439d5cc962/src/train.py#L84
