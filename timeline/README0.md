@@ -148,3 +148,13 @@ ValueError: Cannot load file containing pickled data when allow_pickle=False
 before: https://github.com/neilsambhu/DualAttentionAttack/blob/ae358f221fb51d8a5acd5eb3a8a0f9d1248d2f04/src/train.py#L84  
 instructions to resolve error: https://stackoverflow.com/a/62018921  
 after: https://github.com/neilsambhu/DualAttentionAttack/blob/3d9f62653dfd75ec87f773dda04d1a444eb3fa3d/src/train.py#L84  
+10/19/2022 12:38:50 PM:  
+```
+(dualattentionattack) [nsambhu@localhost src]$ python train.py --datapath="data" --content="contents/smile.jpg" --canny="contents/smile_edge.jpg"
+Traceback (most recent call last):
+  File "train.py", line 84, in <module>
+    texture_content = torch.from_numpy(np.load(args.content),allow_pickle=True).cuda(device=0)
+  File "/home/nsambhu/.conda/envs/dualattentionattack/lib/python3.7/site-packages/numpy/lib/npyio.py", line 445, in load
+    raise ValueError("Cannot load file containing pickled data "
+ValueError: Cannot load file containing pickled data when allow_pickle=False
+```
