@@ -81,7 +81,7 @@ BATCH_SIZE = args.batchsize
 EPOCH = args.epoch
 
 
-texture_content = torch.from_numpy(np.load(args.content)).cuda(device=0)
+texture_content = torch.from_numpy(np.load(args.content),allow_pickle=True).cuda(device=0)
 texture_canny = torch.from_numpy(np.load(args.canny)).cuda(device=0)
 texture_canny = (texture_canny >= 1).int()
 def loss_content_diff(tex):
