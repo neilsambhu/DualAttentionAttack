@@ -134,3 +134,13 @@ RuntimeError: The size of tensor a (6) must match the size of tensor b (646) at 
 # 2022 10 19 restart and document problems
 10/19/2022 11:39:03 AM: I will assume the conda environment is confifgured properly. I renamed the train.py to train0.py.  
 10/19/2022 11:43:47 AM: copy code from https://github.com/nlsde-safety-team/DualAttentionAttack/blob/main/src/train.py into local train.py.  
+10/19/2022 12:19:07 PM: I previously had a bash script to call src/train.py with the necessary parameters from the parent directory of the repository. Now I call train.py directly: I don't have an issue with needing to add 2 additional parameters for train.py.  
+```
+(dualattentionattack) [nsambhu@localhost src]$ python train.py --datapath="data" --content="contents/smile.jpg" --canny="contents/smile_edge.jpg"
+Traceback (most recent call last):
+  File "train.py", line 84, in <module>
+    texture_content = torch.from_numpy(np.load(args.content)).cuda(device=0)
+  File "/home/nsambhu/.conda/envs/dualattentionattack/lib/python3.7/site-packages/numpy/lib/npyio.py", line 445, in load
+    raise ValueError("Cannot load file containing pickled data "
+ValueError: Cannot load file containing pickled data when allow_pickle=False
+```
