@@ -133,3 +133,4 @@ RuntimeError: The size of tensor a (6) must match the size of tensor b (646) at 
 ```
 # 2022 10 19 restart and document problems
 10/19/2022 11:39:03 AM: I will assume the conda environment is confifgured properly. I renamed the train.py to train0.py.  
+10/19/2022 11:43:47 AM: copy code from https://github.com/nlsde-safety-team/DualAttentionAttack/blob/main/src/train.py into local train.py.  
