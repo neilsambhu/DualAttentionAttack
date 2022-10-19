@@ -132,7 +132,7 @@ Traceback (most recent call last):
 RuntimeError: The size of tensor a (6) must match the size of tensor b (646) at non-singleton dimension 4
 ```
 # 2022 10 19 restart and document problems
-10/19/2022 11:39:03 AM: I will assume the conda environment is confifgured properly. I renamed the train.py to train0.py.  
+10/19/2022 11:39:03 AM: I assume the conda environment is confifgured properly. I renamed the train.py to train0.py.  
 10/19/2022 11:43:47 AM: copy code from https://github.com/nlsde-safety-team/DualAttentionAttack/blob/main/src/train.py into local train.py.  
 10/19/2022 12:19:07 PM: I previously had a bash script to call src/train.py with the necessary parameters from the parent directory of the repository. Now I call train.py directly: I don't have an issue with needing to add 2 additional parameters for train.py.  
 ```
@@ -144,3 +144,7 @@ Traceback (most recent call last):
     raise ValueError("Cannot load file containing pickled data "
 ValueError: Cannot load file containing pickled data when allow_pickle=False
 ```
+10/19/2022 12:29:44 PM:  
+before: https://github.com/neilsambhu/DualAttentionAttack/blob/ae358f221fb51d8a5acd5eb3a8a0f9d1248d2f04/src/train.py#L84  
+instructions to resolve error: https://stackoverflow.com/a/62018921  
+after: https://github.com/neilsambhu/DualAttentionAttack/blob/3d9f62653dfd75ec87f773dda04d1a444eb3fa3d/src/train.py#L84  
