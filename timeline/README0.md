@@ -131,3 +131,5 @@ Traceback (most recent call last):
     print(f'(texture_mask * textures).size(): {(texture_mask * textures).size()}')
 RuntimeError: The size of tensor a (6) must match the size of tensor b (646) at non-singleton dimension 4
 ```
+# 2022 10 19 restart and document problems
+10/19/2022 11:39:03 AM: I will assume the conda environment is confifgured properly. I renamed the train.py to train0.py.  
