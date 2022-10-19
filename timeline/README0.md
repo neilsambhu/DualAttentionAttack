@@ -159,3 +159,20 @@ Traceback (most recent call last):
 ValueError: Cannot load file containing pickled data when allow_pickle=False
 ```
 10/19/2022 12:48:03 PM: change position of parameter: https://github.com/neilsambhu/DualAttentionAttack/blob/9a5ba1d3cd56a390abd7ec2af5ef08439d5cc962/src/train.py#L84
+10/19/2022 12:51:31 PM: 
+```
+(dualattentionattack) [nsambhu@localhost src]$ python train.py --datapath="data" --content="contents/smile.jpg" --canny="contents/smile_edge.jpg"
+Traceback (most recent call last):
+  File "/home/nsambhu/.conda/envs/dualattentionattack/lib/python3.7/site-packages/numpy/lib/npyio.py", line 448, in load
+    return pickle.load(fid, **pickle_kwargs)
+_pickle.UnpicklingError: invalid load key, '\xff'.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "train.py", line 84, in <module>
+    texture_content = torch.from_numpy(np.load(args.content,allow_pickle=True)).cuda(device=0)
+  File "/home/nsambhu/.conda/envs/dualattentionattack/lib/python3.7/site-packages/numpy/lib/npyio.py", line 451, in load
+    "Failed to interpret file %s as a pickle" % repr(file)) from e
+OSError: Failed to interpret file 'contents/smile.jpg' as a pickle
+```
