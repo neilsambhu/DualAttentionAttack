@@ -81,8 +81,21 @@ BATCH_SIZE = args.batchsize
 EPOCH = args.epoch
 
 
-texture_content = torch.from_numpy(np.load(args.content,allow_pickle=True)).cuda(device=0)
-texture_canny = torch.from_numpy(np.load(args.canny)).cuda(device=0)
+# 11/5/2022 7:46:03 PM: Neil debugging pickle error: start
+bVerbose = False
+if bVerbose:
+    print(f'args.content: {args.content}')
+    # args.content: contents/smile.jpg
+    # import sys;sys.exit()
+# 11/5/2022 7:46:03 PM: Neil debugging pickle error: end
+# texture_content = torch.from_numpy(np.load(args.content,allow_pickle=True)).cuda(device=0) # 11/5/2022 7:50:37 PM: Neil commented out
+# 11/5/2022 7:50:59 PM: Neil debugging pickle error: start
+texture_content = torch.from_numpy(np.asarray(Image.open(args.content))).cuda(device=0) # 11/5/2022 7:52:04 PM: Neil new image load technique
+# 11/5/2022 7:50:59 PM: Neil debugging pickle error: end
+# texture_canny = torch.from_numpy(np.load(args.canny)).cuda(device=0) # 11/5/2022 7:53:35 PM: Neil commented out
+# 11/5/2022 7:53:44 PM: Neil duplicate pickle solution from texture_content to texture_canny: start
+texture_canny = torch.from_numpy(np.asarray(Image.open(args.canny))).cuda(device=0)
+# 11/5/2022 7:53:44 PM: Neil duplicate pickle solution from texture_content to texture_canny: end
 texture_canny = (texture_canny >= 1).int()
 def loss_content_diff(tex):
     return  D1 * torch.sum(texture_canny * torch.pow(tex - texture_content, 2)) + D2 * torch.sum((1 - texture_canny) * torch.pow(tex - texture_content, 2)) 
