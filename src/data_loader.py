@@ -45,7 +45,10 @@ class MyDataset(Dataset):
         # 11/5/2022 9:17:23 PM: Neil self.faces_var debug: start
         self.faces_var = torch.from_numpy(np.asarray(faces[None, :, :].cpu())).cuda(device=0)
         # 11/5/2022 9:17:23 PM: Neil self.faces_var debug: end
-        self.vertices_var = torch.from_numpy(vertices[None, :, :]).cuda(device=0)
+        # self.vertices_var = torch.from_numpy(vertices[None, :, :]).cuda(device=0) # 11/5/2022 9:20:16 PM: Neil commented out
+        # 11/5/2022 9:20:41 PM: Neil self.vertices_var debug: start
+        self.vertices_var = torch.from_numpy(np.asarray(vertices[None, :, :].cpu())).cuda(device=0)
+        # 11/5/2022 9:20:41 PM: Neil self.vertices_var debug: end
         self.mask_renderer = nmr.NeuralRenderer(img_size=self.img_size).cuda()
         self.mask_dir = mask_dir
         self.ret_mask = ret_mask
