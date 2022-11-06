@@ -158,7 +158,10 @@ def loss_midu(x1):
 texture_param = np.ones((1, faces.shape[0], texture_size, texture_size, texture_size, 3), 'float32') * -0.9# test 0
 texture_param = torch.autograd.Variable(torch.from_numpy(texture_param).cuda(device=0), requires_grad=True)
 
-texture_origin = torch.from_numpy(textures[None, :, :, :, :, :]).cuda(device=0)
+# texture_origin = torch.from_numpy(textures[None, :, :, :, :, :]).cuda(device=0) # 11/5/2022 7:59:13 PM: Neil commented out
+# 11/5/2022 7:59:39 PM: Neil texture_origin: start
+texture_origin = torch.from_numpy(np.asarray(textures[None, :, :, :, :, :].cpu())).cuda(device=0)
+# 11/5/2022 7:59:39 PM: Neil texture_origin: end
 
 texture_mask = np.zeros((faces.shape[0], texture_size, texture_size, texture_size, 3), 'int8')
 with open(args.faces, 'r') as f:
@@ -272,7 +275,10 @@ if __name__ == '__main__':
     train_dir = os.path.join(args.datapath, 'phy_attack/train/')
     test_dir = os.path.join(args.datapath, 'phy_attack/test/')
 
-    texture_param = torch.autograd.Variable(torch.from_numpy(np.load(args.content)).cuda(device=0), requires_grad=True)
+    # texture_param = torch.autograd.Variable(torch.from_numpy(np.load(args.content)).cuda(device=0), requires_grad=True) # 11/5/2022 8:16:39 PM: Neil commented out
+    # 11/5/2022 8:16:48 PM: texture_param debug: start
+    texture_param = torch.autograd.Variable(torch.from_numpy(np.asarray(Image.open(args.content), dtype=np.float32)).cuda(device=0), requires_grad=True)
+    # 11/5/2022 8:16:48 PM: texture_param debug: end
     
     run_cam(train_dir, EPOCH)
     
