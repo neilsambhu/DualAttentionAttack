@@ -190,9 +190,9 @@ def cal_texture(CONTENT=False):
     # a = texture_origin * (1 - texture_mask) # 11/5/2022 9:42:28 PM: successful
     # b = texture_mask * textures # 11/5/2022 9:42:34 PM: error is here
     # print(f'texture_mask: {texture_mask}\ntextures: {textures}');import sys;sys.exit()
-    print(f'texture_origin.size(): {texture_origin.size()}')
-    print(f'texture_mask.size(): {texture_mask.size()}')
-    print(f'textures.size(): {textures.size()}')
+    print(f'texture_origin.size(): {texture_origin.size()}') # texture_origin.size(): torch.Size([1, 23145, 6, 6, 6, 3])
+    print(f'texture_mask.size(): {texture_mask.size()}') # texture_mask.size(): torch.Size([1, 23145, 6, 6, 6, 3])
+    print(f'textures.size(): {textures.size()}') # textures.size(): torch.Size([647, 646, 3])
     a = texture_origin * (1 - texture_mask)
     b = texture_mask @ textures
     # 11/5/2022 9:39:20 PM: cal_texture debug: end
