@@ -174,12 +174,28 @@ texture_mask = torch.from_numpy(texture_mask).cuda(device=0).unsqueeze(0)
 
 
 def cal_texture(CONTENT=False):
+    # 11/5/2022 9:44:33 PM: textures: start
+    textures = None
+    # 11/5/2022 9:44:33 PM: textures: end
     if CONTENT:
         textures = 0.5 * (torch.nn.Tanh()(texture_content) + 1) 
     else:
         textures = 0.5 * (torch.nn.Tanh()(texture_param) + 1)
     # return textures
-    return texture_origin * (1 - texture_mask) + texture_mask * textures
+    # return texture_origin * (1 - texture_mask) + texture_mask * textures # 11/5/2022 9:26:24 PM: Neil commented out
+    # 11/5/2022 9:39:20 PM: cal_texture debug: start
+    # return texture_origin @ (1 - texture_mask) + texture_mask * textures # 11/5/2022 9:27:08 PM: error
+    # return texture_origin * (1 - texture_mask) + texture_mask @ textures # 11/5/2022 9:38:14 PM: error
+    # return texture_origin @ (1 - texture_mask) + texture_mask @ textures # 11/5/2022 9:38:14 PM: error
+    # a = texture_origin * (1 - texture_mask) # 11/5/2022 9:42:28 PM: successful
+    # b = texture_mask * textures # 11/5/2022 9:42:34 PM: error is here
+    # print(f'texture_mask: {texture_mask}\ntextures: {textures}');import sys;sys.exit()
+    print(f'texture_origin.size(): {texture_origin.size()}')
+    print(f'texture_mask.size(): {texture_mask.size()}')
+    print(f'textures.size(): {textures.size()}')
+    a = texture_origin * (1 - texture_mask)
+    b = texture_mask @ textures
+    # 11/5/2022 9:39:20 PM: cal_texture debug: end
    
          
 def run_cam(data_dir, epoch, train=True, batch_size=BATCH_SIZE):
