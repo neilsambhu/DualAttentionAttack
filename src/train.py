@@ -160,6 +160,8 @@ texture_param = torch.autograd.Variable(torch.from_numpy(texture_param).cuda(dev
 
 # texture_origin = torch.from_numpy(textures[None, :, :, :, :, :]).cuda(device=0) # 11/5/2022 7:59:13 PM: Neil commented out
 # 11/5/2022 7:59:39 PM: Neil texture_origin: start
+# print(f'textures.size(): {textures.size()}') # textures.size(): torch.Size([23145, 6, 6, 6, 3])
+# from PIL import Image;im=Image.fromarray(textures.cpu().numpy());im.save("textures.png");import sys;sys.exit()
 texture_origin = torch.from_numpy(np.asarray(textures[None, :, :, :, :, :].cpu())).cuda(device=0)
 # 11/5/2022 7:59:39 PM: Neil texture_origin: end
 
@@ -167,12 +169,28 @@ texture_mask = np.zeros((faces.shape[0], texture_size, texture_size, texture_siz
 with open(args.faces, 'r') as f:
     face_ids = f.readlines()
     # print(face_ids)
+    # 11/9/2022 1:42:28 PM: Neil texture_mask debug: start
+    print(f'np.shape(texture_mask): {np.shape(texture_mask)}')
+    print(f'type(face_ids): {type(face_ids)}')
+    print(f'len(face_ids): {len(face_ids)}')
+    # import sys;sys.exit()
+    # 11/9/2022 1:42:28 PM: Neil texture_mask debug: end
     for face_id in face_ids:
         if face_id != '\n':
             texture_mask[int(face_id) - 1, :, :, :, :] = 1
+            # 11/11/2022 5:39:05 PM: Neil texture_mask and face_id pring: start
+            print(f'face_id.strip(): {face_id.strip()}\tnp.shape(texture_mask): {np.shape(texture_mask)}')
+            import sys;sys.exit()
+            # 11/11/2022 5:39:05 PM: Neil texture_mask and face_id pring: end
 texture_mask = torch.from_numpy(texture_mask).cuda(device=0).unsqueeze(0)
 
-
+# 11/11/2022 3:30:12 PM: convert torch.Tensor to png on hard disk: start 
+def TorchTensorToPng(tensor, sOutputFilename):
+    arrayNumpy = tensor.cpu().detach().numpy().astype(np.uint8)
+    # print(f'arrayNumpy: {arrayNumpy}')
+    from PIL import Image
+    Image.fromarray(arrayNumpy).save(sOutputFilename)
+# 11/11/2022 3:30:12 PM: convert torch.Tensor to png on hard disk: end
 def cal_texture(CONTENT=False):
     # 11/5/2022 9:44:33 PM: textures: start
     textures = None
@@ -180,6 +198,26 @@ def cal_texture(CONTENT=False):
     if CONTENT:
         textures = 0.5 * (torch.nn.Tanh()(texture_content) + 1) 
     else:
+        # 11/7/2022 2:51:54 PM: texture_param to textures: start
+        print(f'texture_param.size(): {texture_param.size()}') # texture_param.size(): torch.Size([647, 646, 3])
+        # 11/7/2022 2:51:54 PM: texture_param to textures: end
+        # 11/10/2022 1:22:09 PM: texture_param viewing: start
+        # a = texture_param.cpu()
+        # print(f'type(a): {type(a)}')
+        # b = a.detach()
+        # print(f'type(b): {type(b)}')
+        # c = b.numpy()
+        # print(f'type(c): {type(c)}')
+        # print(f'c.shape: {c.shape}')
+        # print(f'c.dtype: {c.dtype}')
+        # print(f'c.dtype==np.float32: {c.dtype==np.float32}')
+        # d = (c*255).astype(np.uint8)
+        # from PIL import Image;im=Image.fromarray(d);im.save("texture_param.png");import sys;sys.exit()
+        # 11/10/2022 1:22:09 PM: texture_param viewing: end
+        # 11/11/2022 3:33:43 PM: call TorchTensorToPng: start
+        # TorchTensorToPng(texture_param,'texture_param.png')
+        # import sys;sys.exit();
+        # 11/11/2022 3:33:43 PM: call TorchTensorToPng: end
         textures = 0.5 * (torch.nn.Tanh()(texture_param) + 1)
     # return textures
     # return texture_origin * (1 - texture_mask) + texture_mask * textures # 11/5/2022 9:26:24 PM: Neil commented out
@@ -190,11 +228,12 @@ def cal_texture(CONTENT=False):
     # a = texture_origin * (1 - texture_mask) # 11/5/2022 9:42:28 PM: successful
     # b = texture_mask * textures # 11/5/2022 9:42:34 PM: error is here
     # print(f'texture_mask: {texture_mask}\ntextures: {textures}');import sys;sys.exit()
-    print(f'texture_origin.size(): {texture_origin.size()}') # texture_origin.size(): torch.Size([1, 23145, 6, 6, 6, 3])
+    print(f'texture_origin.size(): {texture_origin.size()}') # texture_origin.size(): torch.Size([1, 23145, 6, 6, 6, 3]) # 14,997,960 elements
     print(f'texture_mask.size(): {texture_mask.size()}') # texture_mask.size(): torch.Size([1, 23145, 6, 6, 6, 3])
-    print(f'textures.size(): {textures.size()}') # textures.size(): torch.Size([647, 646, 3])
-    a = texture_origin * (1 - texture_mask)
-    b = texture_mask @ textures
+    print(f'textures.size(): {textures.size()}') # textures.size(): torch.Size([647, 646, 3]) # 1,253,886 elements
+    a = texture_origin * (1 - texture_mask) # each term has the same dimension
+    print(f'a.size(): {a.size()}')
+    b = texture_mask * textures
     # 11/5/2022 9:39:20 PM: cal_texture debug: end
    
          

@@ -49,7 +49,10 @@ torch.autograd.set_detect_anomaly(True)
 texture_param = np.ones((1, faces.shape[0], texture_size, texture_size, texture_size, 3), 'float32') * -0.9# test 0
 texture_param = torch.autograd.Variable(torch.from_numpy(texture_param).cuda(device=0), requires_grad=True)
 
-texture_origin = torch.from_numpy(textures[None, :, :, :, :, :]).cuda(device=0)
+# texture_origin = torch.from_numpy(textures[None, :, :, :, :, :]).cuda(device=0) # 11/10/2022 1:03:41 PM: Neil commented out
+# 11/10/2022 1:04:00 PM: Neil texture_origin: start
+texture_origin = torch.from_numpy(np.asarray(textures[None, :, :, :, :, :].cpu())).cuda(device=0)
+# 11/10/2022 1:04:00 PM: Neil texture_origin: end
 
 texture_mask = np.zeros((faces.shape[0], texture_size, texture_size, texture_size, 3), 'int8')
 with open('all_faces.txt', 'r') as f:
