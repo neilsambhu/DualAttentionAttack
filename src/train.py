@@ -22,6 +22,7 @@ import torch.nn.functional as F
 import random
 from functools import reduce
 import argparse
+from inspect import currentframe, getframeinfo # 11/17/2022 3:15:57 PM: Neil added
 
 torch.manual_seed(2333)
 torch.cuda.manual_seed(2333)
@@ -82,7 +83,7 @@ EPOCH = args.epoch
 
 
 # 11/5/2022 7:46:03 PM: Neil debugging pickle error: start
-bVerbose = False
+bVerbose = True
 if bVerbose:
     print(f'args.content: {args.content}')
     # args.content: contents/smile.jpg
@@ -156,7 +157,11 @@ def loss_midu(x1):
 # Textures
 
 texture_param = np.ones((1, faces.shape[0], texture_size, texture_size, texture_size, 3), 'float32') * -0.9# test 0
+if bVerbose:
+    print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: texture_param.shape: {texture_param.shape}')
 texture_param = torch.autograd.Variable(torch.from_numpy(texture_param).cuda(device=0), requires_grad=True)
+if bVerbose:
+    print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: texture_param.size(): {texture_param.size()}')
 
 # texture_origin = torch.from_numpy(textures[None, :, :, :, :, :]).cuda(device=0) # 11/5/2022 7:59:13 PM: Neil commented out
 # 11/5/2022 7:59:39 PM: Neil texture_origin: start
@@ -179,8 +184,8 @@ with open(args.faces, 'r') as f:
         if face_id != '\n':
             texture_mask[int(face_id) - 1, :, :, :, :] = 1
             # 11/11/2022 5:39:05 PM: Neil texture_mask and face_id pring: start
-            print(f'face_id.strip(): {face_id.strip()}\tnp.shape(texture_mask): {np.shape(texture_mask)}')
-            import sys;sys.exit()
+            # print(f'face_id.strip(): {face_id.strip()}\tnp.shape(texture_mask): {np.shape(texture_mask)}')
+            # import sys;sys.exit()
             # 11/11/2022 5:39:05 PM: Neil texture_mask and face_id pring: end
 texture_mask = torch.from_numpy(texture_mask).cuda(device=0).unsqueeze(0)
 
@@ -220,7 +225,7 @@ def cal_texture(CONTENT=False):
         # 11/11/2022 3:33:43 PM: call TorchTensorToPng: end
         textures = 0.5 * (torch.nn.Tanh()(texture_param) + 1)
     # return textures
-    # return texture_origin * (1 - texture_mask) + texture_mask * textures # 11/5/2022 9:26:24 PM: Neil commented out
+    return texture_origin * (1 - texture_mask) + texture_mask * textures # 11/5/2022 9:26:24 PM: Neil commented out # 11/17/2022 3:43:44 PM: restored
     # 11/5/2022 9:39:20 PM: cal_texture debug: start
     # return texture_origin @ (1 - texture_mask) + texture_mask * textures # 11/5/2022 9:27:08 PM: error
     # return texture_origin * (1 - texture_mask) + texture_mask @ textures # 11/5/2022 9:38:14 PM: error
@@ -259,20 +264,38 @@ def run_cam(data_dir, epoch, train=True, batch_size=BATCH_SIZE):
         print('Epoch: ', _, '/', epoch)
         count = 0
         tqdm_loader = tqdm.tqdm(loader)
+        if bVerbose:
+            print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: loader: {loader}')
+            print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: tqdm_loader: {tqdm_loader}')
+            # print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: enumerate(tqdm_loader): {enumerate(tqdm_loader)}')
+            print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: list(enumerate(tqdm_loader)): {list(enumerate(tqdm_loader))}')
         for i, (index, total_img, texture_img, masks) in enumerate(tqdm_loader):
+            if bVerbose:
+                print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: Neil reached here')
             index = int(index[0])
-            
+            if bVerbose:
+                print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: Neil reached here')
             
             
             total_img_np = total_img.data.cpu().numpy()[0]
+            if bVerbose:
+                print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: Neil reached here')
             # print(total_img_np.shape)
             total_img_np = Image.fromarray(np.transpose(total_img_np, (1,2,0)).astype('uint8'))
+            if bVerbose:
+                print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: Neil reached here')
 
             total_img_np.save(os.path.join(log_dir, 'test_total.jpg')) 
+            if bVerbose:
+                print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: Neil reached here')
             # print(texture_img.size())
             # print(torch.max(texture_img))
             Image.fromarray((255 * texture_img).data.cpu().numpy()[0].transpose((1, 2, 0)).astype('uint8')).save(os.path.join(log_dir, 'texture2.png'))
+            if bVerbose:
+                print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: Neil reached here')
             Image.fromarray((255 * masks).data.cpu().numpy()[0].astype('uint8')).save(os.path.join(log_dir, 'mask.png'))
+            if bVerbose:
+                print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: Neil reached here')
             # scipy.misc.imsave(os.path.join(log_dir, 'mask.png'), (255*masks).data.cpu().numpy()[0])
             
             #######
@@ -332,12 +355,14 @@ if __name__ == '__main__':
 
     # texture_param = torch.autograd.Variable(torch.from_numpy(np.load(args.content)).cuda(device=0), requires_grad=True) # 11/5/2022 8:16:39 PM: Neil commented out
     # 11/5/2022 8:16:48 PM: texture_param debug: start
-    texture_param = torch.autograd.Variable(torch.from_numpy(np.asarray(Image.open(args.content), dtype=np.float32)).cuda(device=0), requires_grad=True)
+    texture_param_ofSize_647_646_3 = torch.autograd.Variable(torch.from_numpy(np.asarray(Image.open(args.content), dtype=np.float32)).cuda(device=0), requires_grad=True)
+    if bVerbose:
+        print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: texture_param_ofSize_647_646_3.size(): {texture_param_ofSize_647_646_3.size()}')
     # 11/5/2022 8:16:48 PM: texture_param debug: end
     
     run_cam(train_dir, EPOCH)
     
-    np.save(os.path.join(log_dir, 'texture.npy'), texture_param.data.cpu().numpy())
+    np.save(os.path.join(log_dir, 'texture.npy'), texture_param_ofSize_647_646_3.data.cpu().numpy())
     
 
         
