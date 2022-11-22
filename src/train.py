@@ -265,6 +265,7 @@ def run_cam(data_dir, epoch, train=True, batch_size=BATCH_SIZE):
         count = 0
         tqdm_loader = tqdm.tqdm(loader)
         if bVerbose:
+            print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: dataset: {dataset}')
             print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: loader: {loader}')
             print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: tqdm_loader: {tqdm_loader}')
             # print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: enumerate(tqdm_loader): {enumerate(tqdm_loader)}')
