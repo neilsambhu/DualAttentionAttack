@@ -268,8 +268,9 @@ def run_cam(data_dir, epoch, train=True, batch_size=BATCH_SIZE):
             print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: dataset: {dataset}')
             print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: loader: {loader}')
             print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: tqdm_loader: {tqdm_loader}')
-            # print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: enumerate(tqdm_loader): {enumerate(tqdm_loader)}')
+            print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: enumerate(tqdm_loader): {enumerate(tqdm_loader)}')
             print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: list(enumerate(tqdm_loader)): {list(enumerate(tqdm_loader))}')
+        # 11/26/2022 4:47:59 PM: install cupy: "conda install -c anaconda cupy"
         for i, (index, total_img, texture_img, masks) in enumerate(tqdm_loader):
             if bVerbose:
                 print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: Neil reached here')

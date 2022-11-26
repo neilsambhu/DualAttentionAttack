@@ -113,7 +113,10 @@ class MyDataset(Dataset):
 if __name__ == '__main__':
     obj_file = 'audi_et_te.obj'
     vertices, faces, textures = neural_renderer.load_obj(filename_obj=obj_file, load_texture=True)
-    dataset = MyDataset('../data/phy_attack/train/', 608, 4, faces, vertices)
+    # dataset = MyDataset('../data/phy_attack/train/', 608, 4, faces, vertices) # 11/22/2022 2:41:52 PM: Neil commented out
+    # 11/22/2022 2:42:20 PM: dataset directory: start
+    dataset = MyDataset('data/phy_attack/train/', 608, 4, faces, vertices)
+    # 11/22/2022 2:42:20 PM: dataset directory: end
     loader = DataLoader(
         dataset=dataset,   
         batch_size=3,     
