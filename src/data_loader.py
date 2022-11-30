@@ -12,6 +12,7 @@ sys.path.append("../renderer/")
 import nmr_test as nmr
 import neural_renderer
 
+bVerbose = True
 
 class MyDataset(Dataset):
     def __init__(self, data_dir, img_size, texture_size, faces, vertices, distence=None, mask_dir='', ret_mask=False):
@@ -37,7 +38,7 @@ class MyDataset(Dataset):
                 # print(dis)
                 if dis <= distence:
                     self.files.append(file)
-        print(len(self.files))
+        print(f'len(self.files): {len(self.files)}')
         self.img_size = img_size
         textures = np.ones((1, faces.shape[0], texture_size, texture_size, texture_size, 3), 'float32')
         self.textures = torch.from_numpy(textures).cuda(device=0)
@@ -49,7 +50,13 @@ class MyDataset(Dataset):
         # 11/5/2022 9:20:41 PM: Neil self.vertices_var debug: start
         self.vertices_var = torch.from_numpy(np.asarray(vertices[None, :, :].cpu())).cuda(device=0)
         # 11/5/2022 9:20:41 PM: Neil self.vertices_var debug: end
-        self.mask_renderer = nmr.NeuralRenderer(img_size=self.img_size).cuda()
+        # 11/29/2022 11:52:43 AM: Neil added shapes: start
+        if bVerbose:
+            print(f'self.textures.size(): {self.textures.size()}\nself.vertices_var.size(): {self.vertices_var.size()}\nself.faces_var.size(): {self.faces_var.size()}')
+            # import sys;sys.exit()
+        # 11/29/2022 11:52:49 AM: Neil added shapes: end
+        # self.mask_renderer = nmr.NeuralRenderer(img_size=self.img_size).cuda() # 11/27/2022 1:06:06 PM: Neil commented out
+        self.mask_renderer = nmr.NeuralRenderer(img_size=self.img_size).cuda(device=0) # 11/27/2022 1:06:15 PM: Neil added
         self.mask_dir = mask_dir
         self.ret_mask = ret_mask
         # print(self.files)
@@ -98,7 +105,8 @@ class MyDataset(Dataset):
         mask = cv2.imread(mask_file)
         mask = cv2.resize(mask, (self.img_size, self.img_size))
         mask = np.logical_or(mask[:, :, 0], mask[:, :, 1], mask[:, :, 2])
-        mask = torch.from_numpy(mask.astype('float32')).cuda()
+        # mask = torch.from_numpy(mask.astype('float32')).cuda() # 11/27/2022 1:06:57 PM: Neil commented out
+        mask = torch.from_numpy(mask.astype('float32')).cuda(device=0) # 11/27/2022 1:07:06 PM: Neil added
         # print(mask.size())
         # print(torch.max(mask))
 
@@ -123,7 +131,13 @@ if __name__ == '__main__':
         shuffle=True,            
         #num_workers=2,              
     )
-    
+    # 11/26/2022 5:02:33 PM: DataLoader object debug: start
+    if bVerbose:
+        print(f'loader: {loader}')
+        # print(f'loader[0]: {loader[0]}')
+        # print(f'loader.__getitem__(0): {loader.__getitem__(0)}')
+        # import sys;sys.exit()
+    # 11/26/2022 5:02:33 PM: DataLoader object debug: end
     for img, car_box in loader:
         print(img.size(), car_box.size())
 # ß 11/5/2022 8:26:34 PM: Neil commented out

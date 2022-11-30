@@ -250,28 +250,36 @@ def run_cam(data_dir, epoch, train=True, batch_size=BATCH_SIZE):
         batch_size=batch_size,  
         shuffle=False,        
         # num_workers=2,     
+        num_workers=2,     # 11/27/2022 12:36:33 PM: Neil added
     )
     
     optim = torch.optim.Adam([texture_param], lr = LR)
     
     Cam = CAM()
-    
+
     textures = cal_texture()
 
     dataset.set_textures(textures)
-    print(len(dataset))
-    for _ in range(epoch):
-        print('Epoch: ', _, '/', epoch)
+    print(torch.cuda.is_available(),torch.cuda.device_count())
+    for e in range(epoch):
+        print('Epoch: ', e, '/', epoch)
+        print(len(loader))
         count = 0
-        tqdm_loader = tqdm.tqdm(loader)
+        # tqdm_loader = tqdm.tqdm(loader) # 11/27/2022 12:10:21 PM: Neil commented out
         if bVerbose:
-            print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: dataset: {dataset}')
+            # print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: tqdm_loader: {tqdm_loader}')
+            # print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: len(tqdm_loader): {len(tqdm_loader)}')
+            # print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: dataset: {dataset}')
+            print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: type(loader): {type(loader)}')
             print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: loader: {loader}')
-            print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: tqdm_loader: {tqdm_loader}')
-            print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: enumerate(tqdm_loader): {enumerate(tqdm_loader)}')
-            print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: list(enumerate(tqdm_loader)): {list(enumerate(tqdm_loader))}')
+            # print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: enumerate(tqdm_loader): {enumerate(tqdm_loader)}')
+            # print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: list(enumerate(tqdm_loader)): {list(enumerate(tqdm_loader))}')
         # 11/26/2022 4:47:59 PM: install cupy: "conda install -c anaconda cupy"
-        for i, (index, total_img, texture_img, masks) in enumerate(tqdm_loader):
+        # for i, (index, total_img, texture_img, masks) in enumerate(tqdm_loader): # 11/27/2022 12:10:56 PM: Neil commented out
+        for i,j in enumerate(loader):
+            print(i)
+        continue
+        for i, (index, total_img, texture_img, masks) in enumerate(loader):
             if bVerbose:
                 print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: Neil reached here')
             index = int(index[0])
@@ -337,7 +345,6 @@ def run_cam(data_dir, epoch, train=True, batch_size=BATCH_SIZE):
 
             
 if __name__ == '__main__':
-    
     logs = {
         'epoch': EPOCH,
         'batch_size': BATCH_SIZE,
@@ -362,10 +369,7 @@ if __name__ == '__main__':
         print(f'{getframeinfo(currentframe()).filename}:{getframeinfo(currentframe()).lineno}: texture_param_ofSize_647_646_3.size(): {texture_param_ofSize_647_646_3.size()}')
     # 11/5/2022 8:16:48 PM: texture_param debug: end
     
-    run_cam(train_dir, EPOCH)
+    # run_cam(train_dir, EPOCH)
+    run_cam(test_dir, EPOCH)
     
-    np.save(os.path.join(log_dir, 'texture.npy'), texture_param_ofSize_647_646_3.data.cpu().numpy())
-    
-
-        
-   
+    # np.save(os.path.join(log_dir, 'texture.npy'), texture_param_ofSize_647_646_3.data.cpu().numpy())
