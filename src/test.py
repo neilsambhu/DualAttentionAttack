@@ -25,8 +25,8 @@ from argparse import ArgumentParser
 
 
 parser = ArgumentParser()
-parser.add_argument("--texture", type=str, default='textures/smile_trained.npy', help="texture")
-parser.add_argument("--obj", type=str, default='audi_et_te.obj')
+parser.add_argument("--texture", type=str, default='assets/textures/smile_trained.npy', help="texture")
+parser.add_argument("--obj", type=str, default='assets/object_files/audi/audi_et_te.obj')
 parser.add_argument("--datapath", type=str)
 
 args = parser.parse_args()

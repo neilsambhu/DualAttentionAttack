@@ -128,7 +128,7 @@ class GradCam():
         #     input = input.cuda()
         scores = self.model(input)
         # class_idx = torch.argmax(scores, axis=-1)
-        pred = F.softmax(scores)[0, class_idx]
+        pred = F.softmax(scores, dim=0)[0, class_idx]
         # print(class_idx, pred)
         # print(scores)
         weights = self._get_weights(class_idx, scores)
@@ -160,11 +160,12 @@ class CAM:
         input = self.preprocess_image(img)
         target_index = [468,511,609,817,581,751,627]
         if t_index==None:
-            ret, mask, pred = self.grad_cam(input, target_index[index % len(target_index)])
+            ret, mask, pred = self.grad_cam(input, target_index[(index % len(target_index)).int().item()])
         else:
             ret, mask, pred = self.grad_cam(input, t_index)
         # print(img.shape)
-        self.show_cam_on_image(raw_img, mask)
+        if self.log_dir is not None:
+            self.show_cam_on_image(raw_img, mask)
         return ret, pred
         
     def preprocess_image(self, img):

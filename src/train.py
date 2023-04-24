@@ -244,6 +244,7 @@ def cal_texture(CONTENT=False):
          
 def run_cam(data_dir, epoch, train=True, batch_size=BATCH_SIZE):
     print(data_dir)
+    print(data_dir, texture_size, faces.shape, vertices.shape, batch_size);quit()
     dataset = MyDataset(data_dir, 224, texture_size, faces, vertices, distence=None, mask_dir=mask_dir, ret_mask=True)
     loader = DataLoader(
         dataset=dataset,     

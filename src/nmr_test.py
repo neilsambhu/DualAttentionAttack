@@ -19,9 +19,12 @@ bVerbose = True
 ### Utils ###
 #############
 def convert_as(src, trg):
-    src = src.type_as(trg)
-    if src.is_cuda:
-        src = src.cuda(device=trg.get_device())
+    # src = src.type_as(trg)
+    # print("BBBB")
+    # if src.is_cuda:
+    #     print("CCCC")
+    #     src = src.cuda(device=trg.get_device())
+    # print("DDDD")
     return src
 
 
@@ -114,19 +117,11 @@ class NMR(object):
         Returns:
             images: B X 3 x 256 X 256 numpy array
         '''
-        # self.faces = chainer.Variable(chainer.cuda.to_gpu(faces, self.cuda_device)) # 11/27/2022 11:45:14 AM: Neil commented out
-        self.faces = torch.Tensor(faces).to(self.cuda_device) # 11/27/2022 11:46:22 AM: new code
-        # self.vertices = chainer.Variable(chainer.cuda.to_gpu(vertices, self.cuda_device)) # 11/27/2022 11:48:36 AM: Neil commented out
-        self.vertices = torch.Tensor(vertices).to(self.cuda_device) # 11/27/2022 11:46:22 AM: new code
-        if bVerbose:
-            print(f'type(self.vertices): {type(self.vertices)}')
-            # print(f'self.vertices: {self.vertices}')
-        # self.textures = chainer.Variable(chainer.cuda.to_gpu(textures, self.cuda_device)) # 11/27/2022 11:51:48 AM: Neil commented out
-        self.textures = torch.Tensor(textures).to(self.cuda_device) # 11/27/2022 11:52:14 AM: new code
-        if bVerbose:
-            print(f'self.vertices.shape: {self.vertices.shape}')
-            print(f'self.faces.shape: {self.faces.shape}')
-            print(f'self.textures.shape: {self.textures.shape}')
+        
+        self.vertices = vertices
+        self.faces = faces
+        self.textures = textures
+       
         self.renderer.perspective=False # 11/27/2022 11:58:30 AM: Neil added
         self.images = self.renderer.render(self.vertices, self.faces, self.textures) # 11/27/2022 11:20:29 AM: Neil commented out
         if bVerbose:
@@ -163,22 +158,22 @@ class Render(torch.autograd.Function):
     def forward(self, vertices, faces, textures=None):
         # B x N x 3
         # Flipping the y-axis here to make it align with the image coordinate system!
-        # vs = vertices.cpu().numpy() # 11/27/2022 1:28:32 PM: Neil commented out
-        vs = vertices.cuda().numpy() # 11/27/2022 1:28:46 PM: Neil added
+        vs = vertices
         vs[:, :, 1] *= -1
-        fs = faces.cpu().numpy()
+        fs = faces
         if textures is None:
             self.mask_only = True
             masks = self.renderer.forward_mask(vs, fs)
             return convert_as(torch.Tensor(masks), vertices)
         else:
             self.mask_only = False
-            ts = textures.cpu().numpy()
+            ts = textures
             imgs = self.renderer.forward_img(vs, fs, ts)
+            return imgs # 12/1/2022 6:04:40 PM  TVS added this
             return convert_as(torch.Tensor(imgs), vertices)
 
     def backward(self, grad_out):
-        g_o = grad_out.cpu().numpy()
+        g_o = grad_out
         if self.mask_only:
             grad_verts = self.renderer.backward_mask(g_o)
             grad_verts = convert_as(torch.Tensor(grad_verts), grad_out)
