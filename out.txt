@@ -1,15 +1,12 @@
-On branch NeilBranch0
-Your branch is up to date with 'origin/NeilBranch0'.
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   out.txt
-	modified:   sandbox.ipynb
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	.vscode/
-	src/data/
-
-no changes added to commit (use "git add" and/or "git commit -a")
+Preparing the dataset...
+Image 1 of 12500
+Image 2 of 12500
+Image 3 of 12500
+Image 4 of 12500
+Image 5 of 12500
+Image 6 of 12500
+Image 7 of 12500
+Image 8 of 12500
+Image 9 of 12500
+Image 10 of 12500
+Image 11 of 12500

@@ -109,6 +109,7 @@ class NMR(object):
         return self.vertices.grad.get()
 
     def forward_img(self, vertices, faces, textures):
+        # print(f'vertices:{vertices.shape}\nfaces:{faces.shape}\ntextures:{textures.shape}')
         ''' Renders masks.
         Args:
             vertices: B X N X 3 numpy array
@@ -123,13 +124,15 @@ class NMR(object):
         self.textures = textures
        
         self.renderer.perspective=False # 11/27/2022 11:58:30 AM: Neil added
+        self.renderer.perspective=True # 4/24/2023 2:30:09 PM: Neil added
         self.images = self.renderer.render(self.vertices, self.faces, self.textures) # 11/27/2022 11:20:29 AM: Neil commented out
-        if bVerbose:
-            print(f'len(self.images): {len(self.images)}')
+        # if bVerbose:
+        #     print(f'len(self.images): {len(self.images)}')
         # self.images = self.renderer.render(self.vertices.data, self.faces.data, self.textures.data) 
 
         # images = self.images.data.get() # 11/27/2022 12:03:01 PM: Neil commented out
         images = self.images[0].data # 11/27/2022 12:03:35 PM: Neil added
+        # print(f'images:{images.shape}')
         return images
 
 
@@ -158,8 +161,9 @@ class Render(torch.autograd.Function):
     def forward(self, vertices, faces, textures=None):
         # B x N x 3
         # Flipping the y-axis here to make it align with the image coordinate system!
+        # print(f'vertices:\n{vertices}\n{vertices.shape}\nfaces:\n{faces}\n{faces.shape}\ntextures:\n{textures}\n{textures.shape}')
         vs = vertices
-        vs[:, :, 1] *= -1
+        # vs[:, :, 1] *= -1
         fs = faces
         if textures is None:
             self.mask_only = True
