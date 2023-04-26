@@ -109,7 +109,7 @@ class NMR(object):
         return self.vertices.grad.get()
 
     def forward_img(self, vertices, faces, textures):
-        # print(f'vertices:{vertices.shape}\nfaces:{faces.shape}\ntextures:{textures.shape}')
+        print(f'vertices:{vertices.shape}\nfaces:{faces.shape}\ntextures:{textures.shape}')
         ''' Renders masks.
         Args:
             vertices: B X N X 3 numpy array
