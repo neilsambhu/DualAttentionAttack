@@ -244,6 +244,7 @@ class NeuralRenderer(torch.nn.Module):
         return proj[:, :, :2]
 
     def forward(self, vertices, faces, textures=None):
+        print('a')
         if textures is not None:
             return self.RenderFunc(vertices, faces, textures)
         else:
