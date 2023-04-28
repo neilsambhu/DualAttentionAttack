@@ -155,7 +155,7 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
         render.renderer.renderer.camera_up = camera_up.to(vertices.device)
         
         renderings = render(vertices, faces, textures)
-        if idx == 10:
+        if idx == 0:
             quit()
         renderings /= renderings.max()
         
