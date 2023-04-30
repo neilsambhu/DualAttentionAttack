@@ -148,6 +148,10 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
     # render.renderer.renderer.camera_mode = 'look_at'
 
     for idx, (imgs, masks, (eye, look_at, camera_up)) in enumerate(dl):
+        if idx == 10:
+            pass
+        else:
+            continue
         print(f'Image {idx+1} of {len(dataset)}')
         # print(f'vertices:\n{vertices}\n{vertices.shape}\nfaces:\n{faces}\n{faces.shape}\ntextures:\n{textures}\n{textures.shape}')
         render.renderer.renderer.eye = eye.to(vertices.device)
@@ -155,8 +159,6 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
         render.renderer.renderer.camera_up = camera_up.to(vertices.device)
         
         renderings = render(vertices, faces, textures)
-        if idx == 0:
-            quit()
         renderings /= renderings.max()
         
         result = overlay_morph(imgs[0], renderings[0].cpu(), masks[0], image_size) # result.shape = [3, image_size, image_size]
