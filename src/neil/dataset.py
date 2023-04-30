@@ -12,6 +12,7 @@ from torch.utils.data import DataLoader
 import neural_renderer as nr
 import src.nmr_test as nmr
 
+bVerbose = True
 
 def overlay_morph(image: torch.Tensor, rendered: torch.Tensor, mask: torch.Tensor, image_size: int):
     image = T.functional.to_pil_image(image.permute((2,0,1)))
@@ -148,13 +149,21 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
     # render.renderer.renderer.camera_mode = 'look_at'
 
     for idx, (imgs, masks, (eye, look_at, camera_up)) in enumerate(dl):
+        print(f'Image {idx+1} of {len(dataset)}')
         if idx == 10:
             pass
         else:
             continue
-        print(f'Image {idx+1} of {len(dataset)}')
         # print(f'vertices:\n{vertices}\n{vertices.shape}\nfaces:\n{faces}\n{faces.shape}\ntextures:\n{textures}\n{textures.shape}')
+        if bVerbose:
+            pass
+            print(f'eye: {eye}')
+            print(f'type(eye): {type(eye)}')
         render.renderer.renderer.eye = eye.to(vertices.device)
+        if bVerbose:
+            pass
+            print(f'render.renderer.renderer.eye: {render.renderer.renderer.eye}')
+            print(f'type(render.renderer.renderer.eye): {type(render.renderer.renderer.eye)}')
         render.renderer.renderer.camera_direction = look_at.to(vertices.device)
         render.renderer.renderer.camera_up = camera_up.to(vertices.device)
         
