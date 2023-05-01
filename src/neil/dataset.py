@@ -39,10 +39,21 @@ class DualAttentionDataset(Dataset):
         
         self.items = [] # actual data points/files
         
-        for filename in os.listdir(root):
+        import re
+        file_names = os.listdir(root)
+        regex_pattern = r"data(\d+)\.npz"
+        sorted_files = sorted(file_names, key=lambda x: int(re.findall(regex_pattern, x)[0]))
+        # print(sorted_files);quit()
+
+        # The regular expression pattern r"data(\d+)\.npz" matches the numerical part of the file name,
+        # which is one or more digits surrounded by "data" and ".npz". The 're.findall()' function
+        # extracts this numerical part as a list of strings, and the '[0]' index selects the first (and
+        # only) element of this list. This string is then converted to an integer using 'int()' for sorting.
+        
+        for filename in sorted_files:
             if distance < 0:
                 self.items.append(filename)
-                print(f'{filename}')
+                # print(f'{filename}')
             
             else:
                 data = np.load(os.path.join(root, filename))
@@ -155,7 +166,7 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
     idx_select = 10
     for idx, (imgs, masks, (eye, look_at, camera_up)) in enumerate(dl):
         if idx < idx_select:
-            continue
+            pass
         elif idx == idx_select:
             pass
         elif idx > idx_select:
