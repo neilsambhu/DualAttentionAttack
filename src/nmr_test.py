@@ -13,7 +13,7 @@ import torch
 
 import neural_renderer
 
-bVerbose = True
+bVerbose = False
 
 #############
 ### Utils ###
@@ -129,9 +129,10 @@ class NMR(object):
         self.renderer.perspective=True # 4/24/2023 2:30:09 PM: Neil added
         if bVerbose:
             print('1.2.100.2')
-            import inspect
-            print(f'{inspect.getfile(neural_renderer)}')
-        self.images = self.renderer.render(self.vertices, self.faces, self.textures) # 11/27/2022 11:20:29 AM: Neil commented out
+            # import inspect
+            # print(f'{inspect.getfile(neural_renderer)}')
+        # self.images = self.renderer.render(self.vertices, self.faces, self.textures) # 11/27/2022 11:20:29 AM: Neil commented out
+        self.images = self.renderer.render(self.vertices, self.faces, torch.tanh(self.textures)) # 5/1/2023 3:30:06 PM: Neil added
         if bVerbose:
             print('1.2.100.3')
         # if bVerbose:

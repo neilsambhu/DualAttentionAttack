@@ -28,8 +28,12 @@ def overlay_morph(image: torch.Tensor, rendered: torch.Tensor, mask: torch.Tenso
 
 class DualAttentionDataset(Dataset):
     def __init__(self, root: str, distance: int = -1, train: bool = True):
-        
+        # if bVerbose:
+        #     print(f'root before: {root}')
         self.root = root = f'{root}/train' if train else f'{root}/test'
+        # if bVerbose:
+        #     print(f'root after: {root}')
+        #     print(f'self.root: {self.root}')
         
         assert os.path.exists(root)
         
@@ -38,6 +42,7 @@ class DualAttentionDataset(Dataset):
         for filename in os.listdir(root):
             if distance < 0:
                 self.items.append(filename)
+                print(f'{filename}')
             
             else:
                 data = np.load(os.path.join(root, filename))
@@ -136,7 +141,7 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
     
     dataset = DualAttentionDataset(os.path.join(root, 'phy_attack'), distance, train=True)
 
-    dl = DataLoader(dataset, batch_size, collate_fn=DualAttentionDataset.dual_attn_collate)
+    dl = DataLoader(dataset, batch_size, collate_fn=DualAttentionDataset.dual_attn_collate) # 5/1/2023 5:53:50 PM: Neil to TVS: Why are we using the PyTorch DataLoader instead of the src/data_loader.py?
 
     vertices, faces, _ = nr.load_obj(filename_obj=vehicle_obj, texture_size=texture_size, load_texture=True)
     # fully white texture
