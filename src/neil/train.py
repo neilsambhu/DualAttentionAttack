@@ -11,7 +11,7 @@ from src.neil.model import DASModel
 
 def train(args):
     # Dataset
-    train_set = DASTrainingSet(args.dataset, image_size=args.image_size)
+    train_set = DASTrainingSet(args.masks_dir, args.dataset, image_size=args.image_size)
     dataloader = DataLoader(train_set, args.batch_size, collate_fn=DASTrainingSet.collate_train_set)
 
     # Model

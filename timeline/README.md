@@ -6,6 +6,7 @@ python main.py prepare --dataset "src/data" --output "~/data1/DAS_output" --vehi
 4/27/2023 12:28:06 PM: associated functions:  
 dataset.py: `renderings = render(vertices, faces, textures)`  
 nmr_test.py: `def forward(self, vertices, faces, textures=None):`  
+4/28/2023 1:23:15 PM: load mash image at specified index in sandbox.ipynb
 4/30/2023 5:44:12 PM: new prepare dataset command
 ```
 python -u main.py prepare --dataset "src/data" --output "~/data1/DAS_output" --vehicle-object "assets/object_files/audi/audi_et_te.obj" --batch-size 1 --image-size 800 --texture-size 6 --distance -1 |& tee out.txt
@@ -25,3 +26,7 @@ python -u main.py prepare --dataset "src/data" --output "/home/nsambhu/data1/DAS
 5/1/2023 2:26:35 PM: `faces` affects the quality of the curves of the object. Smaller values result in a lower quality render.  
 5/1/2023 2:38:27 PM: `textures` does not affect the render.  
 5/1/2023 2:47:13 PM: `self.renderer.perspective=False` makes the render larger.  
+5/1/2023 6:45:32 PM: train command
+```
+python -u main.py train --vehicle-object "assets/object_files/audi/audi_et_te.obj" --texture-size 6 --epochs 1 --batch-size 1 --masks_dir "./src/data" --dataset "/home/nsambhu/data1/DAS_output" --content-src "assets/contents/smile.jpg" --canny-src "assets/contents/smile_edge.jpg" --image-size 800 --cam-edge 7 --d1 0.9 --d2 0.1 --t 0.0001 --save-every 1000 --model-dst "models"
+```

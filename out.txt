@@ -1,67 +1,102 @@
 Preparing the dataset...
 Image 1 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
 Image 2 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
 Image 3 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
 Image 4 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
 Image 5 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
 Image 6 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
 Image 7 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
 Image 8 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
 Image 9 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
 Image 10 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
 Image 11 of 12500
-1
-vertices:torch.Size([1, 13449, 3])
-faces:torch.Size([1, 23145, 3])
-textures:torch.Size([1, 23145, 6, 6, 6, 3])
-2
+Image 12 of 12500
+Image 13 of 12500
+Image 14 of 12500
+Image 15 of 12500
+Image 16 of 12500
+Image 17 of 12500
+Image 18 of 12500
+Image 19 of 12500
+Image 20 of 12500
+Image 21 of 12500
+Image 22 of 12500
+Image 23 of 12500
+Image 24 of 12500
+Image 25 of 12500
+Image 26 of 12500
+Image 27 of 12500
+Image 28 of 12500
+Image 29 of 12500
+Image 30 of 12500
+Image 31 of 12500
+Image 32 of 12500
+Image 33 of 12500
+Image 34 of 12500
+Image 35 of 12500
+Image 36 of 12500
+Image 37 of 12500
+Image 38 of 12500
+Image 39 of 12500
+Image 40 of 12500
+Image 41 of 12500
+Image 42 of 12500
+Image 43 of 12500
+Image 44 of 12500
+Image 45 of 12500
+Image 46 of 12500
+Image 47 of 12500
+Image 48 of 12500
+Image 49 of 12500
+Image 50 of 12500
+Image 51 of 12500
+Image 52 of 12500
+Image 53 of 12500
+Image 54 of 12500
+Image 55 of 12500
+Image 56 of 12500
+Image 57 of 12500
+Image 58 of 12500
+Image 59 of 12500
+Image 60 of 12500
+Image 61 of 12500
+Image 62 of 12500
+Image 63 of 12500
+Image 64 of 12500
+Image 65 of 12500
+Image 66 of 12500
+Image 67 of 12500
+Image 68 of 12500
+Image 69 of 12500
+Image 70 of 12500
+Image 71 of 12500
+Image 72 of 12500
+Image 73 of 12500
+Image 74 of 12500
+Image 75 of 12500
+Image 76 of 12500
+Image 77 of 12500
+Image 78 of 12500
+Image 79 of 12500
+Image 80 of 12500
+Image 81 of 12500
+Image 82 of 12500
+Image 83 of 12500
+Image 84 of 12500
+Image 85 of 12500
+Image 86 of 12500
+Image 87 of 12500
+Image 88 of 12500
+Image 89 of 12500
+Image 90 of 12500
+Image 91 of 12500
+Image 92 of 12500
+Image 93 of 12500
+Image 94 of 12500
+Image 95 of 12500
+Image 96 of 12500
+Image 97 of 12500
+Image 98 of 12500
+Image 99 of 12500
+Image 100 of 12500
+Image 101 of 12500

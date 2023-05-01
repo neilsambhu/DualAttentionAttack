@@ -34,4 +34,3 @@ python main.py train \
 
 python main.py train --help # for more information
 ```
-4/28/2023 1:23:15 PM: load mash image at specified index in sandbox.ipynb

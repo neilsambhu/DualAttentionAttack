@@ -99,13 +99,16 @@ class DualAttentionDataset(Dataset):
 
 
 class DASTrainingSet(Dataset):
-    def __init__(self, root, image_size):
+    def __init__(self, masks_dir, root, image_size):
         self.image_size = image_size
         
-        mask_folder = os.path.join(root, 'masks')
+        mask_folder = os.path.join(masks_dir, 'masks')
         rendering_folder = os.path.join(root, 'rendering')
         mash_folder = os.path.join(root, 'mash')
-        assert os.path.exists(mask_folder) and os.path.exists(rendering_folder) and os.path.exists(mash_folder)
+        # print(mask_folder,rendering_folder,mash_folder)
+        assert os.path.exists(mask_folder) 
+        assert os.path.exists(rendering_folder) 
+        assert os.path.exists(mash_folder)
         
         self.mask_files = glob(os.path.join(mask_folder, '**.png'))
         self.rendering_files = glob(os.path.join(rendering_folder, '**.png'))
@@ -163,7 +166,7 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
 
     render = nmr.NeuralRenderer(image_size)
     # render.renderer.renderer.camera_mode = 'look_at'
-    idx_select = 10
+    idx_select = 100
     for idx, (imgs, masks, (eye, look_at, camera_up)) in enumerate(dl):
         if idx < idx_select:
             pass
