@@ -147,26 +147,36 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
 
     render = nmr.NeuralRenderer(image_size)
     # render.renderer.renderer.camera_mode = 'look_at'
-
+    idx_select = 10
     for idx, (imgs, masks, (eye, look_at, camera_up)) in enumerate(dl):
-        print(f'Image {idx+1} of {len(dataset)}')
-        if idx == 10:
-            pass
-        else:
+        if idx < idx_select:
             continue
+        elif idx == idx_select:
+            pass
+        elif idx > idx_select:
+            quit()
+        print(f'Image {idx+1} of {len(dataset)}')
         # print(f'vertices:\n{vertices}\n{vertices.shape}\nfaces:\n{faces}\n{faces.shape}\ntextures:\n{textures}\n{textures.shape}')
         if bVerbose:
             pass
-            print(f'eye: {eye}')
-            print(f'type(eye): {type(eye)}')
+            # print(f'eye: {eye}')
+            # print(f'type(eye): {type(eye)}')
         render.renderer.renderer.eye = eye.to(vertices.device)
+        render.renderer.renderer.camera_direction = look_at.to(vertices.device)
+        render.renderer.renderer.camera_up = camera_up.to(vertices.device)
         if bVerbose:
             pass
             print(f'render.renderer.renderer.eye: {render.renderer.renderer.eye}')
-            print(f'type(render.renderer.renderer.eye): {type(render.renderer.renderer.eye)}')
-        render.renderer.renderer.camera_direction = look_at.to(vertices.device)
-        render.renderer.renderer.camera_up = camera_up.to(vertices.device)
-        
+            # print(f'type(render.renderer.renderer.eye): {type(render.renderer.renderer.eye)}')
+            print(f'render.renderer.renderer.camera_direction: {render.renderer.renderer.camera_direction}')
+            # print(f'type(render.renderer.renderer.camera_direction): {type(render.renderer.renderer.camera_direction)}')
+            print(f'render.renderer.renderer.camera_up: {render.renderer.renderer.camera_up}')
+            # print(f'type(render.renderer.renderer.camera_up): {type(render.renderer.renderer.camera_up)}')
+        # 4/30/2023 10:25:07 PM: multiply eye, camera_direction, and camera_up by a constant: start
+        # render.renderer.renderer.eye = torch.mul(render.renderer.renderer.eye, .5)
+        # render.renderer.renderer.camera_direction = torch.mul(render.renderer.renderer.camera_direction, -1)
+        render.renderer.renderer.camera_up = torch.mul(render.renderer.renderer.camera_up, -2)
+        # 4/30/2023 10:25:07 PM: multiply eye, camera_direction, and camera_up by a constant: end
         renderings = render(vertices, faces, textures)
         renderings /= renderings.max()
         

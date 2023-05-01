@@ -109,7 +109,7 @@ class NMR(object):
         return self.vertices.grad.get()
 
     def forward_img(self, vertices, faces, textures):
-        print(f'vertices:{vertices.shape}\nfaces:{faces.shape}\ntextures:{textures.shape}')
+        # print(f'vertices:{vertices.shape}\nfaces:{faces.shape}\ntextures:{textures.shape}')
         ''' Renders masks.
         Args:
             vertices: B X N X 3 numpy array
@@ -244,7 +244,6 @@ class NeuralRenderer(torch.nn.Module):
         return proj[:, :, :2]
 
     def forward(self, vertices, faces, textures=None):
-        print('a')
         if textures is not None:
             return self.RenderFunc(vertices, faces, textures)
         else:
