@@ -111,7 +111,7 @@ class NMR(object):
     def forward_img(self, vertices, faces, textures):
         if bVerbose:
             print('1.2.100.1')
-        # print(f'vertices:{vertices.shape}\nfaces:{faces.shape}\ntextures:{textures.shape}')
+        print(f'vertices:{vertices.shape}\nfaces:{faces.shape}\ntextures:{textures.shape}')
         ''' Renders masks.
         Args:
             vertices: B X N X 3 numpy array
