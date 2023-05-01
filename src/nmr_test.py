@@ -127,7 +127,13 @@ class NMR(object):
        
         self.renderer.perspective=False # 11/27/2022 11:58:30 AM: Neil added
         self.renderer.perspective=True # 4/24/2023 2:30:09 PM: Neil added
+        if bVerbose:
+            print('1.2.100.2')
+            import inspect
+            print(f'{inspect.getfile(neural_renderer)}')
         self.images = self.renderer.render(self.vertices, self.faces, self.textures) # 11/27/2022 11:20:29 AM: Neil commented out
+        if bVerbose:
+            print('1.2.100.3')
         # if bVerbose:
         #     print(f'len(self.images): {len(self.images)}')
         # self.images = self.renderer.render(self.vertices.data, self.faces.data, self.textures.data) 
