@@ -166,16 +166,19 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
         render.renderer.renderer.camera_up = camera_up.to(vertices.device)
         if bVerbose:
             pass
-            print(f'render.renderer.renderer.eye: {render.renderer.renderer.eye}')
+            # print(f'render.renderer.renderer.eye: {render.renderer.renderer.eye}')
             # print(f'type(render.renderer.renderer.eye): {type(render.renderer.renderer.eye)}')
-            print(f'render.renderer.renderer.camera_direction: {render.renderer.renderer.camera_direction}')
+            # print(f'render.renderer.renderer.camera_direction: {render.renderer.renderer.camera_direction}')
             # print(f'type(render.renderer.renderer.camera_direction): {type(render.renderer.renderer.camera_direction)}')
-            print(f'render.renderer.renderer.camera_up: {render.renderer.renderer.camera_up}')
+            # print(f'render.renderer.renderer.camera_up: {render.renderer.renderer.camera_up}')
             # print(f'type(render.renderer.renderer.camera_up): {type(render.renderer.renderer.camera_up)}')
         # 4/30/2023 10:25:07 PM: multiply eye, camera_direction, and camera_up by a constant: start
         # render.renderer.renderer.eye = torch.mul(render.renderer.renderer.eye, .5)
         # render.renderer.renderer.camera_direction = torch.mul(render.renderer.renderer.camera_direction, -1)
-        render.renderer.renderer.camera_up = torch.mul(render.renderer.renderer.camera_up, -2)
+        # render.renderer.renderer.camera_up = torch.mul(render.renderer.renderer.camera_up, -2)
+        vertices = torch.mul(vertices,.5)
+        # faces = torch.mul(faces,.1)
+        # textures = torch.mul(textures,.1)
         # 4/30/2023 10:25:07 PM: multiply eye, camera_direction, and camera_up by a constant: end
         renderings = render(vertices, faces, textures)
         renderings /= renderings.max()
