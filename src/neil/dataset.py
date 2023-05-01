@@ -176,11 +176,15 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
         # render.renderer.renderer.eye = torch.mul(render.renderer.renderer.eye, .5)
         # render.renderer.renderer.camera_direction = torch.mul(render.renderer.renderer.camera_direction, -1)
         # render.renderer.renderer.camera_up = torch.mul(render.renderer.renderer.camera_up, -2)
-        vertices = torch.mul(vertices,.5)
-        # faces = torch.mul(faces,.1)
-        # textures = torch.mul(textures,.1)
+        # vertices = torch.mul(vertices,2)
+        # faces = torch.mul(faces,.9)
+        # textures = torch.mul(textures,10)
         # 4/30/2023 10:25:07 PM: multiply eye, camera_direction, and camera_up by a constant: end
+        if bVerbose:
+            print('1')
         renderings = render(vertices, faces, textures)
+        if bVerbose:
+            print('2')
         renderings /= renderings.max()
         
         result = overlay_morph(imgs[0], renderings[0].cpu(), masks[0], image_size) # result.shape = [3, image_size, image_size]

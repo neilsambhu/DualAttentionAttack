@@ -1,21 +1,9 @@
-On branch NeilBranch0
-Your branch is up to date with 'origin/NeilBranch0'.
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   out.txt
-	modified:   sandbox.ipynb
-	modified:   src/__pycache__/nmr_test.cpython-37.pyc
-	modified:   src/neil/__pycache__/dataset.cpython-37.pyc
-	modified:   src/neil/dataset.py
-	modified:   src/nmr_test.py
-	modified:   timeline/README.md
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	.vscode/
-	src/data/
-	~/
-
-no changes added to commit (use "git add" and/or "git commit -a")
+Preparing the dataset...
+Image 11 of 12500
+1
+1.1
+1.2
+1.2.1
+1.2.100
+1.2.100.1
+2

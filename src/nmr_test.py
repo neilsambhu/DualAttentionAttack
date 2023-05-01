@@ -109,6 +109,8 @@ class NMR(object):
         return self.vertices.grad.get()
 
     def forward_img(self, vertices, faces, textures):
+        if bVerbose:
+            print('1.2.100.1')
         # print(f'vertices:{vertices.shape}\nfaces:{faces.shape}\ntextures:{textures.shape}')
         ''' Renders masks.
         Args:
@@ -159,6 +161,8 @@ class Render(torch.autograd.Function):
         self.renderer = renderer
 
     def forward(self, vertices, faces, textures=None):
+        if bVerbose:
+            print('1.2.1')
         # B x N x 3
         # Flipping the y-axis here to make it align with the image coordinate system!
         # print(f'vertices:\n{vertices}\n{vertices.shape}\nfaces:\n{faces}\n{faces.shape}\ntextures:\n{textures}\n{textures.shape}')
@@ -166,10 +170,14 @@ class Render(torch.autograd.Function):
         # vs[:, :, 1] *= -1
         fs = faces
         if textures is None:
+            if bVerbose:
+                print('1.2.2')
             self.mask_only = True
             masks = self.renderer.forward_mask(vs, fs)
             return convert_as(torch.Tensor(masks), vertices)
         else:
+            if bVerbose:
+                print('1.2.100')
             self.mask_only = False
             ts = textures
             imgs = self.renderer.forward_img(vs, fs, ts)
@@ -177,6 +185,8 @@ class Render(torch.autograd.Function):
             return convert_as(torch.Tensor(imgs), vertices)
 
     def backward(self, grad_out):
+        if bVerbose:
+            print('1.2.200')
         g_o = grad_out
         if self.mask_only:
             grad_verts = self.renderer.backward_mask(g_o)
@@ -244,9 +254,15 @@ class NeuralRenderer(torch.nn.Module):
         return proj[:, :, :2]
 
     def forward(self, vertices, faces, textures=None):
+        if bVerbose:
+            print('1.1')
         if textures is not None:
+            if bVerbose:
+                print('1.2')
             return self.RenderFunc(vertices, faces, textures)
         else:
+            if bVerbose:
+                print('1.3')
             return self.RenderFunc(vertices, faces)
 
 

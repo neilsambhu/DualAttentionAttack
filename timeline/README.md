@@ -21,3 +21,7 @@ python -u main.py prepare --dataset "src/data" --output "/home/nsambhu/data1/DAS
 5/1/2023 2:09:13 PM: link between files is not accurate. `dataset.py` did not properly connect to `sandbox.ipynb`. TODO: redo changes to `eye` and other variables to see which variables affect rotation of the rendering.  
 5/1/2023 2:13:11 PM: `eye` affects the zoom in or out from the object. Larger values result in a smaller object.  
 5/1/2023 2:16:27 PM: `camera_direction` does not affect the object. Negative values make the object disappear.  Same for `camera_up`.  
+5/1/2023 2:24:04 PM: `vertices` affects zoom like `eye`.  
+5/1/2023 2:26:35 PM: `faces` affects the quality of the curves of the object. Smaller values result in a lower quality render.  
+5/1/2023 2:38:27 PM: `textures` does not affect the render.  
+5/1/2023 2:47:13 PM: `self.renderer.perspective=False` makes the render larger.  
