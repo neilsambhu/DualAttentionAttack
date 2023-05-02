@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 import neural_renderer as nr
 import src.nmr_test as nmr
 
-bVerbose = True
+bVerbose = False
 
 def overlay_morph(image: torch.Tensor, rendered: torch.Tensor, mask: torch.Tensor, image_size: int):
     image = T.functional.to_pil_image(image.permute((2,0,1)))
@@ -168,12 +168,12 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
     # render.renderer.renderer.camera_mode = 'look_at'
     idx_select = 100
     for idx, (imgs, masks, (eye, look_at, camera_up)) in enumerate(dl):
-        if idx < idx_select:
-            pass
-        elif idx == idx_select:
-            pass
-        elif idx > idx_select:
-            quit()
+        # if idx < idx_select:
+        #     pass
+        # elif idx == idx_select:
+        #     pass
+        # elif idx > idx_select:
+        #     quit()
         print(f'Image {idx+1} of {len(dataset)}')
         # print(f'vertices:\n{vertices}\n{vertices.shape}\nfaces:\n{faces}\n{faces.shape}\ntextures:\n{textures}\n{textures.shape}')
         if bVerbose:
