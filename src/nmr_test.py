@@ -13,7 +13,7 @@ import torch
 
 import neural_renderer
 
-bVerbose = False
+bVerbose = True
 
 #############
 ### Utils ###
@@ -110,7 +110,7 @@ class NMR(object):
 
     def forward_img(self, vertices, faces, textures):
         if bVerbose:
-            print('1.2.100.1')
+            print('3.2.100.1')
         # print(f'vertices:{vertices.shape}\nfaces:{faces.shape}\ntextures:{textures.shape}')
         ''' Renders masks.
         Args:
@@ -128,13 +128,13 @@ class NMR(object):
         self.renderer.perspective=False # 11/27/2022 11:58:30 AM: Neil added
         self.renderer.perspective=True # 4/24/2023 2:30:09 PM: Neil added
         if bVerbose:
-            print('1.2.100.2')
+            print('3.2.100.2')
             # import inspect
             # print(f'{inspect.getfile(neural_renderer)}')
         # self.images = self.renderer.render(self.vertices, self.faces, self.textures) # 11/27/2022 11:20:29 AM: Neil commented out
         self.images = self.renderer.render(self.vertices, self.faces, torch.tanh(self.textures)) # 5/1/2023 3:30:06 PM: Neil added
         if bVerbose:
-            print('1.2.100.3')
+            print('3.2.100.3')
         # if bVerbose:
         #     print(f'len(self.images): {len(self.images)}')
         # self.images = self.renderer.render(self.vertices.data, self.faces.data, self.textures.data) 
@@ -169,7 +169,7 @@ class Render(torch.autograd.Function):
 
     def forward(self, vertices, faces, textures=None):
         if bVerbose:
-            print('1.2.1')
+            print('3.2.1')
         # B x N x 3
         # Flipping the y-axis here to make it align with the image coordinate system!
         # print(f'vertices:\n{vertices}\n{vertices.shape}\nfaces:\n{faces}\n{faces.shape}\ntextures:\n{textures}\n{textures.shape}')
@@ -178,13 +178,13 @@ class Render(torch.autograd.Function):
         fs = faces
         if textures is None:
             if bVerbose:
-                print('1.2.2')
+                print('3.2.2')
             self.mask_only = True
             masks = self.renderer.forward_mask(vs, fs)
             return convert_as(torch.Tensor(masks), vertices)
         else:
             if bVerbose:
-                print('1.2.100')
+                print('3.2.100')
             self.mask_only = False
             ts = textures
             imgs = self.renderer.forward_img(vs, fs, ts)
@@ -193,7 +193,7 @@ class Render(torch.autograd.Function):
 
     def backward(self, grad_out):
         if bVerbose:
-            print('1.2.200')
+            print('3.2.200')
         g_o = grad_out
         if self.mask_only:
             grad_verts = self.renderer.backward_mask(g_o)
@@ -218,6 +218,8 @@ class NeuralRenderer(torch.nn.Module):
     Only fwd/bwd once per iteration.
     """
     def __init__(self, img_size=800):
+        if bVerbose:
+            print('1.1')
         super(NeuralRenderer, self).__init__()
         self.renderer = NMR()
         
@@ -262,14 +264,14 @@ class NeuralRenderer(torch.nn.Module):
 
     def forward(self, vertices, faces, textures=None):
         if bVerbose:
-            print('1.1')
+            print('3.1')
         if textures is not None:
             if bVerbose:
-                print('1.2')
+                print('3.2')
             return self.RenderFunc(vertices, faces, textures)
         else:
             if bVerbose:
-                print('1.3')
+                print('3.3')
             return self.RenderFunc(vertices, faces)
 
 

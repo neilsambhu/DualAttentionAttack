@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 import neural_renderer as nr
 import src.nmr_test as nmr
 
-bVerbose = False
+bVerbose = True
 
 def overlay_morph(image: torch.Tensor, rendered: torch.Tensor, mask: torch.Tensor, image_size: int):
     image = T.functional.to_pil_image(image.permute((2,0,1)))
@@ -164,16 +164,20 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
     vertices.unsqueeze_(0)
     faces.unsqueeze_(0)
 
+    if bVerbose:
+        print('1')
     render = nmr.NeuralRenderer(image_size)
+    if bVerbose:
+        print('2')
     # render.renderer.renderer.camera_mode = 'look_at'
-    idx_select = 100
+    idx_select = 10
     for idx, (imgs, masks, (eye, look_at, camera_up)) in enumerate(dl):
-        # if idx < idx_select:
-        #     pass
-        # elif idx == idx_select:
-        #     pass
-        # elif idx > idx_select:
-        #     quit()
+        if idx < idx_select:
+            continue
+        elif idx == idx_select:
+            pass
+        elif idx > idx_select:
+            quit()
         print(f'Image {idx+1} of {len(dataset)}')
         # print(f'vertices:\n{vertices}\n{vertices.shape}\nfaces:\n{faces}\n{faces.shape}\ntextures:\n{textures}\n{textures.shape}')
         if bVerbose:
@@ -200,10 +204,10 @@ def prepare_dataset_for_training(root, output, vehicle_obj, batch_size,
         # textures = torch.mul(textures,10)
         # 4/30/2023 10:25:07 PM: multiply eye, camera_direction, and camera_up by a constant: end
         if bVerbose:
-            print('1')
+            print('3')
         renderings = render(vertices, faces, textures)
         if bVerbose:
-            print('2')
+            print('4')
         renderings /= renderings.max()
         
         result = overlay_morph(imgs[0], renderings[0].cpu(), masks[0], image_size) # result.shape = [3, image_size, image_size]
